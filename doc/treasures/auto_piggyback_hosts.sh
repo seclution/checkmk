@@ -7,6 +7,12 @@ set -euo pipefail
 # Automatically create hosts for Docker containers providing piggyback data.
 # Execute this script as the site user from the site root directory.
 
+# Verify that OMD_ROOT is set and points to a valid Checkmk site
+if [ -z "${OMD_ROOT:-}" ] || [ ! -x "$OMD_ROOT/bin/cmk" ]; then
+  echo "Please run this script inside a Checkmk site. OMD_ROOT is not set or invalid." >&2
+  exit 1
+fi
+
 # === Configuration ===
 WATO_FOLDER="piggyback"
 WATO_HOSTDIR="etc/check_mk/conf.d/wato/$WATO_FOLDER"
