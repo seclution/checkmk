@@ -87,6 +87,12 @@ for docker_path in "$PIGGYBACK_DIR"/*/; do
 done
 shopt -u nullglob
 
+# === Validate hosts.mk ===
+if ! python -m py_compile "$HOSTS_FILE" >> "$LOGFILE" 2>&1; then
+  log "❌ Syntaxfehler in $HOSTS_FILE"
+  exit 1
+fi
+
 # === Apply configuration ===
 log "🔄 Generiere Konfiguration (cmk -U)"
 if ! $CMK -U >> "$LOGFILE" 2>&1; then
