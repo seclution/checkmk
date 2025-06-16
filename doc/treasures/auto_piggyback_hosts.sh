@@ -37,7 +37,7 @@ mkdir -p "$(dirname "$LOGFILE")"
 
 # create wato folder metadata if missing
 if [ ! -e "$WATO_HOSTDIR/.wato" ]; then
-  echo "{'attributes': {}, 'num_hosts': 0, 'title': '$WATO_FOLDER'}" > "$WATO_HOSTDIR/.wato"
+  echo "{'attributes': {}, 'lock': False, 'num_hosts': 0, 'title': '$WATO_FOLDER'}" > "$WATO_HOSTDIR/.wato"
 fi
 
 # === Check piggyback source ===
