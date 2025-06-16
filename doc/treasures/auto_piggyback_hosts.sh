@@ -1,4 +1,5 @@
 #!/bin/bash
+set -euo pipefail
 # Copyright (C) 2019 Checkmk GmbH - License: GNU General Public License v2
 # This file is part of Checkmk (https://checkmk.com). It is subject to the terms and
 # conditions defined in the file COPYING, which is part of this source code package.
@@ -82,7 +83,10 @@ shopt -u nullglob
 
 # === Apply configuration ===
 log "🔄 Generiere Konfiguration (cmk -U)"
-$CMK -U
+if ! $CMK -U >> "$LOGFILE" 2>&1; then
+  log "❌ cmk -U fehlgeschlagen"
+  exit 1
+fi
 
 log "🔧 Inventarisiere neue Hosts"
 for docker_path in "$PIGGYBACK_DIR"/*/; do
