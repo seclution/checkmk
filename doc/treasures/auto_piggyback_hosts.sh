@@ -75,7 +75,7 @@ for docker_path in "$PIGGYBACK_DIR"/*/; do
 
   log "➕ Lege Host $docker_id mit Parent $parent_host an"
   echo "all_hosts += [\"$docker_id|no-agent|no-ip|/$WATO_FOLDER/\"]" >> "$HOSTS_FILE"
-  echo "parents += [(\"$parent_host\", [\"$docker_id\"])]" >> "$HOSTS_FILE"
+  echo "extra_host_conf.setdefault('parents', []).append((\"$parent_host\", [\"$docker_id\"]))" >> "$HOSTS_FILE"
   ((new++))
 done
 shopt -u nullglob
