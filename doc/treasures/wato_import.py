@@ -111,6 +111,6 @@ for folder in folders:
 
     wato_file = open(pathlokal + folder + "/.wato", "w")
     wato_file.write(
-        "{'attributes': {}, 'num_hosts': %d, 'title': '%s'}\n" % (len(folders[folder]), folder)
+        "{'attributes': {}, 'lock': False, 'num_hosts': %d, 'title': '%s'}\n" % (len(folders[folder]), folder)
     )
     wato_file.close()
