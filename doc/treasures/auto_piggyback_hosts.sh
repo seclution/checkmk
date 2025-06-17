@@ -23,6 +23,12 @@ LOCKFILE="/tmp/create_piggyback_hosts.lock"
 LOGFILE="var/log/piggyback_host_creation.log"
 CLEANUP_AGE_MINUTES=60
 
+# === Options ===
+RESET=false
+if [[ ${1:-} == "--reset" ]]; then
+  RESET=true
+fi
+
 # === Logging ===
 log() {
   echo "$(date '+%F %T') | $1" | tee -a "$LOGFILE"
@@ -40,7 +46,10 @@ touch "$LOCKFILE"
 # === Preparation ===
 mkdir -p "$WATO_HOSTDIR"
 mkdir -p "$(dirname "$LOGFILE")"
-: > "$HOSTS_FILE"
+touch "$HOSTS_FILE"
+if $RESET; then
+  : > "$HOSTS_FILE"
+fi
 
 # create wato folder metadata if missing
 if [ ! -e "$WATO_HOSTDIR/.wato" ]; then
