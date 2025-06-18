@@ -76,7 +76,7 @@ find "$PIGGYBACK_DIR" -mindepth 1 -maxdepth 1 -type d | tee -a "$LOGFILE"
 # === Create hosts from piggyback directories ===
 shopt -s nullglob
 for docker_path in "$PIGGYBACK_DIR"/*/; do
-  ((total++))
+  ((++total))
   docker_id=$(basename "$docker_path")
   parent_file=$(find "$docker_path" -maxdepth 1 -type f | head -n 1)
 
@@ -89,14 +89,14 @@ for docker_path in "$PIGGYBACK_DIR"/*/; do
 
   if grep -q "\"$docker_id\"" "$HOSTS_FILE" 2>/dev/null; then
     log "✔ Host $docker_id existiert bereits – übersprungen"
-    ((skipped++))
+    ((++skipped))
     continue
   fi
 
   log "➕ Lege Host $docker_id mit Parent $parent_host an"
   echo "all_hosts += [\"$docker_id|no-agent|no-ip|/$WATO_FOLDER/\"]" >> "$HOSTS_FILE"
   echo "extra_host_conf.setdefault('parents', []).append((\"$parent_host\", [\"$docker_id\"]))" >> "$HOSTS_FILE"
-  ((new++))
+  ((++new))
 done
 shopt -u nullglob
 
