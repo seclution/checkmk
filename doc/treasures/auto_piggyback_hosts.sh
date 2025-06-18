@@ -69,6 +69,10 @@ skipped=0
 
 log "📦 Beginne Verarbeitung von Piggyback-Daten..."
 
+# Log which directories are present to troubleshoot missing input
+log "📁 Vorhandene Verzeichnisse:"
+find "$PIGGYBACK_DIR" -mindepth 1 -maxdepth 1 -type d | tee -a "$LOGFILE"
+
 # === Create hosts from piggyback directories ===
 shopt -s nullglob
 for docker_path in "$PIGGYBACK_DIR"/*/; do
